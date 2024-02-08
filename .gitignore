@@ -1,0 +1,6 @@
+test
+*.
+*.o
+*.a
+*.out
+.clang-format
