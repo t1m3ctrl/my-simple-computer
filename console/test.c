@@ -97,14 +97,16 @@ main ()
   printAccumulator ();
 
   result = sc_accumulatorSet (1000);
-  printf ("Статус установки недопустимого значения аккумулятора: %d\n", result);
+  printf ("Статус установки недопустимого значения аккумулятора: %d\n",
+          result);
 
   sc_icounterSet (50);
   printf ("Значение счетчика команд: ");
   printCounters ();
 
   result = sc_icounterSet (150);
-  printf ("Статус установки недопустимого значения счетчика команд: %d\n", result);
+  printf ("Статус установки недопустимого значения счетчика команд: %d\n",
+          result);
 
   int memoryValue;
   sc_memoryGet (0, &memoryValue);
