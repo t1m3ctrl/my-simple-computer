@@ -1,4 +1,4 @@
-#include "mt.h"
+#include "../include/mt.h"
 
 int
 mt_setfgcolor (enum colors color)

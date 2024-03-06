@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "../mySimpleComputer/sc.h"
+#include "../include/sc.h"
 
 void
 printCell (int address)

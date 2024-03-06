@@ -1,4 +1,4 @@
-#include "sc.h"
+#include "../include/sc.h"
 
 int
 sc_memoryGet (int address, int *value)

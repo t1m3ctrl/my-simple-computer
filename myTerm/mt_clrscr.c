@@ -1,4 +1,4 @@
-#include "mt.h"
+#include "../include/mt.h"
 
 int
 mt_clrscr (void)
