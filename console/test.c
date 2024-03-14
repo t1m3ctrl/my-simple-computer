@@ -1,123 +1,233 @@
 #include <stdio.h>
 
+#include "../include/mt.h"
 #include "../include/sc.h"
 
 void
-printCell (int address)
+printCell (int address, enum colors fg, enum colors bg)
 {
-  int value;
-  sc_memoryGet (address, &value);
-  printf ("Содержимое ячейки по адресу %d: %d\n", address, value);
+  if (mt_setbgcolor (bg) == -1)
+    return;
+  if (mt_setfgcolor (fg) == -1)
+    return;
+  if (mt_gotoXY ((int) (address / 10 + 1), (int) (address % 10 * 6)) == -1)
+    return;
+  int x;
+  sc_memoryGet (address, &x);
+  if ((x >> 14) == 1)
+    printf (" +%x ", x);
+  else
+    printf (" -%x ", x);
+  mt_setdefaultcolor ();
 }
 
 void
 printFlags (void)
 {
-  int value;
-  sc_regGet (FLAG_OVERFLOW, &value);
-  printf ("Overflow: %c ", value ? '1' : '0');
-  sc_regGet (FLAG_ZERO, &value);
-  printf ("Zero division: %c ", value ? '1' : '0');
-  sc_regGet (FLAG_OUT_OF_MEMORY, &value);
-  printf ("Out of memory: %c ", value ? '1' : '0');
-  sc_regGet (FLAG_CLOCKING, &value);
-  printf ("Clocking: %c ", value ? '1' : '0');
-  sc_regGet (FLAG_INVALID_COMMAND, &value);
-  printf ("Invalid command: %c ", value ? '1' : '0');
-  printf ("\n");
+  int rows;
+  int cols;
+  if (mt_getscreensize (&rows, &cols) == -1)
+    return;
+  if (mt_gotoXY (0, (int) (cols * 3 / 4)) == -1)
+    return;
+  int x;
+  sc_regGet (FLAG_OVERFLOW, &x);
+  if (x)
+    printf ("P ");
+  else
+    printf ("_ ");
+
+  sc_regGet (FLAG_ZERO, &x);
+  if (x)
+    printf ("0 ");
+  else
+    printf ("_ ");
+
+  sc_regGet (FLAG_OUT_OF_MEMORY, &x);
+  if (x)
+    printf ("M ");
+  else
+    printf ("_ ");
+
+  sc_regGet (FLAG_CLOCKING, &x);
+  if (x)
+    printf ("T ");
+  else
+    printf ("_ ");
+
+  sc_regGet (FLAG_INVALID_COMMAND, &x);
+  if (x)
+    printf ("E");
+  else
+    printf ("_");
 }
 
 void
 printDecodedCommand (int value)
 {
-  printf ("Значение в десятичной системе: %d\n", value);
-  printf ("Значение в восьмеричной системе: %o\n", value);
-  printf ("Значение в шестнадцатеричной системе: %x\n", value);
-  printf ("Значение в двоичной системе: ");
-  for (int i = sizeof (int) * 8 - 1; i >= 0; --i)
+  int rows;
+  int cols;
+  if (mt_getscreensize (&rows, &cols) == -1)
+    return;
+  if (mt_gotoXY (3, (int) (cols * 3 / 4)) == -1)
+    return;
+  int x = value;
+  int sign = 0;
+  int command = 21;
+  int operand = 0;
+  if (sc_commandDecode (x, &sign, &command, &operand) == 0)
     {
-      printf ("%d", (value >> i) & 1);
+      if (sign != 0)
+        printf ("+ %2d : %2d\n", command, operand);
+      else
+        printf ("- %2d : %2d\n", command, operand);
     }
-  printf ("\n");
+  else
+    {
+      printf ("Команда");
+      if (mt_gotoXY (5, (int) (cols * 3 / 4)) == -1)
+        return;
+      printf ("!");
+    }
 }
 
 void
 printAccumulator (void)
 {
-  int value;
-  sc_accumulatorGet (&value);
-  printf ("Значение аккумулятора: %d\n", value);
+  int rows;
+  int cols;
+  if (mt_getscreensize (&rows, &cols) == -1)
+    return;
+
+  if (mt_gotoXY (0, (int) (cols / 4 * 2)) == -1)
+    return;
+  int x;
+  sc_accumulatorGet (&x);
+  if (((x >> (15 - 1)) & 0x1) == 1)
+    printf ("sc: +%d hex: %x", x, x);
+  else
+    printf ("sc: -%d hex: %x", x, x);
 }
 
 void
 printCounters (void)
 {
-  int value;
-  sc_icounterGet (&value);
-  printf ("Значение счетчика команд: %d\n", value);
+  int rows;
+  int cols;
+  if (mt_getscreensize (&rows, &cols) == -1)
+    return;
+  if (mt_gotoXY (3, (int) (cols * 2 / 4)) == -1)
+    return;
+  int x;
+  sc_icounterGet (&x);
+  int y;
+  sc_memoryGet (x, &y);
+  printf ("IC:%x\n", x);
+}
+
+void
+printTerm (int address, int input)
+{
+  int rows;
+  int cols;
+  if (mt_getscreensize (&rows, &cols) == -1)
+    return;
+  mt_gotoXY ((int) (rows * 2 / 3), (int) (cols * 2 / 4));
+  getchar ();
+  mt_delline ();
+  if (mt_gotoXY ((int) (rows * 2 / 3) + 4, (int) (cols * 2 / 4)) == -1)
+    return;
+  if (input == 0)
+    {
+      int x;
+      sc_memoryGet (address, &x);
+      if ((x >> 14) == 1)
+        printf ("+%4x", x);
+      else
+        printf ("-%4x", x);
+    }
+  else
+    {
+      printf ("%2d", address);
+      printf ("> ");
+    }
 }
 
 int
 main ()
 {
-  sc_memoryInit ();
   sc_accumulatorInit ();
   sc_icounterInit ();
   sc_regInit ();
+  sc_memoryInit ();
 
-  for (int i = 0; i < 10; ++i)
+  sc_accumulatorSet (32767);
+
+  int fd = STDOUT_FILENO;
+  printf ("проверка потока вывода..\n");
+  if (!isatty (fd))
     {
-      sc_memorySet (i, i * 10);
+      printf ("поток вывода не соответсвует терминалу!");
+      return -1;
+    }
+  getchar ();
+
+  int row = 0;
+  int col = 0;
+  printf ("row = %d, col = %d", row, col);
+  if (mt_getscreensize (&row, &col) == -1)
+    return -1;
+  printf ("row = %d, col = %d", row, col);
+  printf ("\nпроверка терминала..\n");
+
+  if (row < 20 || col < 100)
+    {
+      printf ("терминал мал!");
+      return -1;
     }
 
-  printf ("Содержимое оперативной памяти (десятичное значение):\n");
-  for (int i = 0; i < 100; ++i)
+  printf ("очистка терминала\n");
+  getchar ();
+
+  mt_clrscr ();
+
+  sc_memorySet (0, 32767);
+  sc_memorySet (1, 32767);
+  sc_memorySet (34, 23);
+  printCell (0, BLACK, WHITE);
+  printf ("\n");
+  for (size_t i = 1; i < MEMORY_SIZE; i++)
     {
-      if (i % 10 == 0 && i != 0)
-        printf ("\n");
-      int value;
-      sc_memoryGet (i, &value);
-      printf ("%d ", value);
+      printCell (i, WHITE, BLACK);
+      printf ("\n");
     }
+
+  int sign = 0;
+  int command = 21;
+  int operand = 100;
+  int value = 76;
+  sc_commandEncode (sign, command, operand, &value);
+
+  sc_accumulatorSet (32767);
+  printAccumulator ();
   printf ("\n");
 
-  int result = sc_memorySet (150, 1000);
-  printf ("Статус установки недопустимого значения: %d\n", result);
-
-  sc_regSet (FLAG_OVERFLOW, 1);
-  sc_regSet (FLAG_ZERO, 0);
-  printf ("Содержимое регистра флагов:\n");
+  sc_regInit ();
+  sc_regSet (FLAG_ZERO, 1);
+  sc_regSet (FLAG_INVALID_COMMAND, 1);
   printFlags ();
-
-  result = sc_regSet (10, 1);
-  printf ("Статус установки недопустимого значения флага: %d\n", result);
-
-  sc_accumulatorSet (123);
-  printf ("Значение аккумулятора: ");
-  printAccumulator ();
-
-  result = sc_accumulatorSet (1000);
-  printf ("Статус установки недопустимого значения аккумулятора: %d\n",
-          result);
-
-  sc_icounterSet (50);
-  printf ("Значение счетчика команд: ");
+  printf ("\n");
   printCounters ();
+  printf ("\n");
+  printDecodedCommand (value);
+  printf ("\n");
 
-  result = sc_icounterSet (150);
-  printf ("Статус установки недопустимого значения счетчика команд: %d\n",
-          result);
+  sc_memorySet (6, 32766);
 
-  int memoryValue;
-  sc_memoryGet (0, &memoryValue);
-  printf ("Декодированное значение ячейки памяти: ");
-  printDecodedCommand (memoryValue);
-  printf ("Декодированное значение аккумулятора: ");
-  printDecodedCommand (123);
-
-  int command = 513;
-  printf ("Кодирование команды (в разных системах счисления):\n");
-  printDecodedCommand (command);
-
-  return 0;
+  for (size_t i = 0; i < 7; i++)
+    {
+      printTerm (i, 0);
+      printf ("\n");
+    }
+  mt_gotoXY (40, 0);
 }
