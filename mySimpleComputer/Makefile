@@ -1,5 +1,5 @@
 CC=gcc
-# CFLAGS= -Wall -Werror -Wextra
+CFLAGS= -Wall -Werror -Wextra
 LDFLAGS=
 OBJ_DIR=.
 SOURCES=$(shell find ./* -name '*.c')
