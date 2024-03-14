@@ -3,16 +3,13 @@
 int
 mt_getscreensize (int *rows, int *cols)
 {
-  char *columns_str = getenv ("COLUMNS");
-  char *rows_str = getenv ("LINES");
-
-  if (columns_str == NULL || rows_str == NULL)
+  struct winsize ws;
+  if (!ioctl (STDOUT_FILENO, TIOCGWINSZ, &ws))
     {
-      return -1;
+      *rows = ws.ws_row;
+      *cols = ws.ws_col;
+      return 0;
     }
-
-  *cols = atoi (columns_str);
-  *rows = atoi (rows_str);
-
-  return 0;
+  else
+    return -1;
 }
