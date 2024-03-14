@@ -10,7 +10,7 @@ printCell (int address, enum colors fg, enum colors bg)
     return;
   if (mt_setfgcolor (fg) == -1)
     return;
-  if (mt_gotoXY ((int) (address / 10 + 1), (int) (address % 10 * 6)) == -1)
+  if (mt_gotoXY ((int)(address / 10 + 1), (int)(address % 10 * 6)) == -1)
     return;
   int x;
   sc_memoryGet (address, &x);
@@ -28,7 +28,7 @@ printFlags (void)
   int cols;
   if (mt_getscreensize (&rows, &cols) == -1)
     return;
-  if (mt_gotoXY (0, (int) (cols * 3 / 4)) == -1)
+  if (mt_gotoXY (0, (int)(cols * 3 / 4)) == -1)
     return;
   int x;
   sc_regGet (FLAG_OVERFLOW, &x);
@@ -69,7 +69,7 @@ printDecodedCommand (int value)
   int cols;
   if (mt_getscreensize (&rows, &cols) == -1)
     return;
-  if (mt_gotoXY (3, (int) (cols * 3 / 4)) == -1)
+  if (mt_gotoXY (3, (int)(cols * 3 / 4)) == -1)
     return;
   int x = value;
   int sign = 0;
@@ -85,7 +85,7 @@ printDecodedCommand (int value)
   else
     {
       printf ("Команда");
-      if (mt_gotoXY (5, (int) (cols * 3 / 4)) == -1)
+      if (mt_gotoXY (5, (int)(cols * 3 / 4)) == -1)
         return;
       printf ("!");
     }
@@ -99,7 +99,7 @@ printAccumulator (void)
   if (mt_getscreensize (&rows, &cols) == -1)
     return;
 
-  if (mt_gotoXY (0, (int) (cols / 4 * 2)) == -1)
+  if (mt_gotoXY (0, (int)(cols / 4 * 2)) == -1)
     return;
   int x;
   sc_accumulatorGet (&x);
@@ -116,7 +116,7 @@ printCounters (void)
   int cols;
   if (mt_getscreensize (&rows, &cols) == -1)
     return;
-  if (mt_gotoXY (3, (int) (cols * 2 / 4)) == -1)
+  if (mt_gotoXY (3, (int)(cols * 2 / 4)) == -1)
     return;
   int x;
   sc_icounterGet (&x);
@@ -132,10 +132,10 @@ printTerm (int address, int input)
   int cols;
   if (mt_getscreensize (&rows, &cols) == -1)
     return;
-  mt_gotoXY ((int) (rows * 2 / 3), (int) (cols * 2 / 4));
+  mt_gotoXY ((int)(rows * 2 / 3), (int)(cols * 2 / 4));
   getchar ();
   mt_delline ();
-  if (mt_gotoXY ((int) (rows * 2 / 3) + 4, (int) (cols * 2 / 4)) == -1)
+  if (mt_gotoXY ((int)(rows * 2 / 3) + 4, (int)(cols * 2 / 4)) == -1)
     return;
   if (input == 0)
     {
