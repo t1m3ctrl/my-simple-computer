@@ -7,6 +7,9 @@
 #include <termios.h>
 #include <unistd.h>
 
+#define IN 1
+#define OUT 0
+
 enum colors
 {
   BLACK,
