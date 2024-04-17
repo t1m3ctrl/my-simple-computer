@@ -13,9 +13,9 @@ printBigCell (void)
   int cols;
   if (mt_getscreensize (&rows, &cols) == -1)
     return;
-  if (mt_gotoXY (4, (int) (cols * 2 / 4)) == -1)
+  if (mt_gotoXY (4, (int)(cols * 2 / 4)) == -1)
     return;
-  bc_box (4 + 3, (int) (cols * 2 / 4), 11, 44, WHITE, BLACK,
+  bc_box (4 + 3, (int)(cols * 2 / 4), 11, 44, WHITE, BLACK,
           "Редактируемая ячейка увеличенно", RED, WHITE);
   printf ("\n");
   int bg[2];
@@ -35,23 +35,23 @@ printBigCell (void)
       bg[0] = big2[0 + 17 * 2];
       bg[1] = big2[1 + 17 * 2];
     }
-  bc_printbigchar (bg, 4 + 5, (int) (cols * 2 / 4) + 2, WHITE, BLACK);
+  bc_printbigchar (bg, 4 + 5, (int)(cols * 2 / 4) + 2, WHITE, BLACK);
 
   bg[0] = big2[0 + x / (16 * 16 * 16) * 2];
   bg[1] = big2[1 + x / (16 * 16 * 16) * 2];
-  bc_printbigchar (bg, 4 + 5, (int) (cols * 2 / 4) + 2 + 8, WHITE, BLACK);
+  bc_printbigchar (bg, 4 + 5, (int)(cols * 2 / 4) + 2 + 8, WHITE, BLACK);
 
   bg[0] = big2[0 + x / (16 * 16) % 16 * 2];
   bg[1] = big2[1 + x / (16 * 16) % 16 * 2];
-  bc_printbigchar (bg, 4 + 5, (int) (cols * 2 / 4) + 2 + 8 * 2, WHITE, BLACK);
+  bc_printbigchar (bg, 4 + 5, (int)(cols * 2 / 4) + 2 + 8 * 2, WHITE, BLACK);
 
   bg[0] = big2[0 + x / 16 % 16 * 2];
   bg[1] = big2[1 + x / 16 % 16 * 2];
-  bc_printbigchar (bg, 4 + 5, (int) (cols * 2 / 4) + 2 + 8 * 3, WHITE, BLACK);
+  bc_printbigchar (bg, 4 + 5, (int)(cols * 2 / 4) + 2 + 8 * 3, WHITE, BLACK);
 
   bg[0] = big2[0 + x % 16 * 2];
   bg[1] = big2[1 + x % 16 * 2];
-  bc_printbigchar (bg, 4 + 5, (int) (cols * 2 / 4) + 2 + 8 * 4, WHITE, BLACK);
+  bc_printbigchar (bg, 4 + 5, (int)(cols * 2 / 4) + 2 + 8 * 4, WHITE, BLACK);
 };
 
 void
@@ -62,7 +62,7 @@ printCell (int address, enum colors fg, enum colors bg)
     return;
   if (mt_setfgcolor (fg) == -1)
     return;
-  if (mt_gotoXY ((int) (address / 10 + 2), (int) (address % 10 * 6) + 3) == -1)
+  if (mt_gotoXY ((int)(address / 10 + 2), (int)(address % 10 * 6) + 3) == -1)
     return;
   int x;
   sc_memoryGet (address, &x);
@@ -79,9 +79,9 @@ printFlags (void)
   int cols;
   if (mt_getscreensize (&rows, &cols) == -1)
     return;
-  bc_box (1, (int) (cols / 4 * 3) + 1, 3, 22, WHITE, BLACK, "Регистр флагов", RED,
-          BLACK);
-  if (mt_gotoXY (2, (int) (cols * 3 / 4) + 7) == -1)
+  bc_box (1, (int)(cols / 4 * 3) + 1, 3, 22, WHITE, BLACK, "Регистр флагов",
+          RED, BLACK);
+  if (mt_gotoXY (2, (int)(cols * 3 / 4) + 7) == -1)
     return;
   int x;
 
@@ -123,9 +123,9 @@ printDecodedCommand (int value)
   int cols;
   if (mt_getscreensize (&rows, &cols) == -1)
     return;
-  bc_box (4, (int) (cols / 4 * 3) + 1, 3, 22, WHITE, BLACK, "Команда", RED,
+  bc_box (4, (int)(cols / 4 * 3) + 1, 3, 22, WHITE, BLACK, "Команда", RED,
           BLACK);
-  if (mt_gotoXY (5, (int) (cols * 3 / 4) + 7) == -1)
+  if (mt_gotoXY (5, (int)(cols * 3 / 4) + 7) == -1)
     return;
   int x = value;
   int sign = 0;
@@ -151,9 +151,9 @@ printAccumulator (void)
   int cols;
   if (mt_getscreensize (&rows, &cols) == -1)
     return;
-  bc_box (1, (int) (cols / 4 * 2) + 1, 3, 22, WHITE, BLACK, "Аккумулятор", RED,
+  bc_box (1, (int)(cols / 4 * 2) + 1, 3, 22, WHITE, BLACK, "Аккумулятор", RED,
           BLACK);
-  if (mt_gotoXY (2, (int) (cols / 4 * 2) + 2) == -1)
+  if (mt_gotoXY (2, (int)(cols / 4 * 2) + 2) == -1)
     return;
   int x;
   sc_accumulatorGet (&x);
@@ -170,9 +170,9 @@ printCounters (void)
   int cols;
   if (mt_getscreensize (&rows, &cols) == -1)
     return;
-  bc_box (4, (int) (cols / 4 * 2) + 1, 3, 22, WHITE, BLACK, "Аккумулятор", RED,
+  bc_box (4, (int)(cols / 4 * 2) + 1, 3, 22, WHITE, BLACK, "Аккумулятор", RED,
           BLACK);
-  if (mt_gotoXY (5, (int) (cols * 2 / 4) + 2) == -1)
+  if (mt_gotoXY (5, (int)(cols * 2 / 4) + 2) == -1)
     return;
   int x;
   sc_icounterGet (&x);
@@ -188,14 +188,14 @@ printTerm (int address, int input)
   int cols;
   if (mt_getscreensize (&rows, &cols) == -1)
     return;
-  bc_box ((int) (rows * 2 / 3) - 1, (int) (cols * 2 / 4) - 1, 8, 11, WHITE,
+  bc_box ((int)(rows * 2 / 3) - 1, (int)(cols * 2 / 4) - 1, 8, 11, WHITE,
           BLACK, "IN--OUT", GREEN, WHITE);
-  mt_gotoXY ((int) (rows * 2 / 3), (int) (cols * 2 / 4));
+  mt_gotoXY ((int)(rows * 2 / 3), (int)(cols * 2 / 4));
   mt_delline ();
   mt_setdefaultcolor ();
   printf ("\n");
 
-  if (mt_gotoXY ((int) (rows * 2 / 3) + 4, (int) (cols * 2 / 4)) == -1)
+  if (mt_gotoXY ((int)(rows * 2 / 3) + 4, (int)(cols * 2 / 4)) == -1)
     return;
   if (input == OUT)
     {
