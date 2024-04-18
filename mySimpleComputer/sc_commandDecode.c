@@ -3,7 +3,7 @@
 int
 sc_commandDecode (int value, int *sign, int *command, int *operand)
 {
-  if ((value >> (SC_COMMAND_BITS + 1)) != 0)
+  if (value > 32768 - 1)
     {
       return -1;
     }

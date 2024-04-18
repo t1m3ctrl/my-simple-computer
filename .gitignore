@@ -1,4 +1,6 @@
 test
+console
+font
 *.
 *.o
 *.a

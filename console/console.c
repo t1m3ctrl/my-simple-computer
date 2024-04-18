@@ -13,10 +13,12 @@ printBigCell (void)
   int cols;
   if (mt_getscreensize (&rows, &cols) == -1)
     return;
-  if (mt_gotoXY (4, (int)(cols * 2 / 4)) == -1)
+  if (mt_gotoXY (4, (int) (cols * 2 / 4)) == -1)
     return;
-  bc_box (4 + 3, (int)(cols * 2 / 4), 11, 44, WHITE, BLACK,
-          "Редактируемая ячейка увеличенно", RED, WHITE);
+  // bc_box (4 + 3, 63, 11, 44, WHITE, BLACK,
+  //         "Редактируемая ячейка (увеличенно)", RED, WHITE);
+  bc_box (4 + 3, 63, 12, 44, WHITE, BLACK,
+          " Редактируемая ячейка (увеличенно) ", RED, WHITE);
   printf ("\n");
   int bg[2];
   int x = memory[command_counter];
@@ -35,24 +37,32 @@ printBigCell (void)
       bg[0] = big2[0 + 17 * 2];
       bg[1] = big2[1 + 17 * 2];
     }
-  bc_printbigchar (bg, 4 + 5, (int)(cols * 2 / 4) + 2, WHITE, BLACK);
+  bc_printbigchar (bg, 4 + 5, 63 + 2, WHITE, BLACK);
 
   bg[0] = big2[0 + x / (16 * 16 * 16) * 2];
   bg[1] = big2[1 + x / (16 * 16 * 16) * 2];
-  bc_printbigchar (bg, 4 + 5, (int)(cols * 2 / 4) + 2 + 8, WHITE, BLACK);
+  bc_printbigchar (bg, 4 + 5, 63 + 2 + 8, WHITE, BLACK);
 
   bg[0] = big2[0 + x / (16 * 16) % 16 * 2];
   bg[1] = big2[1 + x / (16 * 16) % 16 * 2];
-  bc_printbigchar (bg, 4 + 5, (int)(cols * 2 / 4) + 2 + 8 * 2, WHITE, BLACK);
+  bc_printbigchar (bg, 4 + 5, 63 + 2 + 8 * 2, WHITE, BLACK);
 
   bg[0] = big2[0 + x / 16 % 16 * 2];
   bg[1] = big2[1 + x / 16 % 16 * 2];
-  bc_printbigchar (bg, 4 + 5, (int)(cols * 2 / 4) + 2 + 8 * 3, WHITE, BLACK);
+  bc_printbigchar (bg, 4 + 5, 63 + 2 + 8 * 3, WHITE, BLACK);
 
   bg[0] = big2[0 + x % 16 * 2];
   bg[1] = big2[1 + x % 16 * 2];
-  bc_printbigchar (bg, 4 + 5, (int)(cols * 2 / 4) + 2 + 8 * 4, WHITE, BLACK);
-};
+  bc_printbigchar (bg, 4 + 5, 63 + 2 + 8 * 4, WHITE, BLACK);
+
+  if (mt_setbgcolor (BLACK) == -1)
+    return;
+  if (mt_setfgcolor (BLUE) == -1)
+    return;
+  if (mt_gotoXY (4 + 13, 63 + 2) == -1)
+    return;
+  printf (" Номер редактируемой ячейки: %d", command_counter);
+}
 
 void
 printCell (int address, enum colors fg, enum colors bg)
@@ -62,14 +72,14 @@ printCell (int address, enum colors fg, enum colors bg)
     return;
   if (mt_setfgcolor (fg) == -1)
     return;
-  if (mt_gotoXY ((int)(address / 10 + 2), (int)(address % 10 * 6) + 3) == -1)
+  if (mt_gotoXY ((int) (address / 10 + 2), (int) (address % 10 * 6) + 3) == -1)
     return;
   int x;
   sc_memoryGet (address, &x);
   if ((x >> 14) == 1)
-    printf ("+%x ", x);
+    printf ("+%x", x);
   else
-    printf ("-%x ", x);
+    printf ("-%x", x);
 }
 
 void
@@ -79,9 +89,9 @@ printFlags (void)
   int cols;
   if (mt_getscreensize (&rows, &cols) == -1)
     return;
-  bc_box (1, (int)(cols / 4 * 3) + 1, 3, 22, WHITE, BLACK, "Регистр флагов",
+  bc_box (1, 85, 3, 22, WHITE, BLACK, " Регистр флагов ",
           RED, BLACK);
-  if (mt_gotoXY (2, (int)(cols * 3 / 4) + 7) == -1)
+  if (mt_gotoXY (2, 85 + 6) == -1)
     return;
   int x;
 
@@ -123,9 +133,9 @@ printDecodedCommand (int value)
   int cols;
   if (mt_getscreensize (&rows, &cols) == -1)
     return;
-  bc_box (4, (int)(cols / 4 * 3) + 1, 3, 22, WHITE, BLACK, "Команда", RED,
+  bc_box (4, 85, 3, 22, WHITE, BLACK, " Команда ", RED,
           BLACK);
-  if (mt_gotoXY (5, (int)(cols * 3 / 4) + 7) == -1)
+  if (mt_gotoXY (5, 85 + 6) == -1)
     return;
   int x = value;
   int sign = 0;
@@ -140,7 +150,7 @@ printDecodedCommand (int value)
     }
   else
     {
-      printf ("Команда\n\t!");
+      printf ("Команда!");
     }
 }
 
@@ -151,9 +161,9 @@ printAccumulator (void)
   int cols;
   if (mt_getscreensize (&rows, &cols) == -1)
     return;
-  bc_box (1, (int)(cols / 4 * 2) + 1, 3, 22, WHITE, BLACK, "Аккумулятор", RED,
+  bc_box (1, 63, 3, 22, WHITE, BLACK, " Аккумулятор ", RED,
           BLACK);
-  if (mt_gotoXY (2, (int)(cols / 4 * 2) + 2) == -1)
+  if (mt_gotoXY (2, 63 + 1) == -1)
     return;
   int x;
   sc_accumulatorGet (&x);
@@ -170,9 +180,9 @@ printCounters (void)
   int cols;
   if (mt_getscreensize (&rows, &cols) == -1)
     return;
-  bc_box (4, (int)(cols / 4 * 2) + 1, 3, 22, WHITE, BLACK, "Аккумулятор", RED,
+  bc_box (4, 63, 3, 22, WHITE, BLACK, " Счётчик команд ", RED,
           BLACK);
-  if (mt_gotoXY (5, (int)(cols * 2 / 4) + 2) == -1)
+  if (mt_gotoXY (5, 63 + 1) == -1)
     return;
   int x;
   sc_icounterGet (&x);
@@ -182,29 +192,61 @@ printCounters (void)
 }
 
 void
+printEditableCell (void)
+{
+  int rows;
+  int cols;
+  if (mt_getscreensize (&rows, &cols) == -1)
+    return;
+  bc_box (16, 1, 3, 62, WHITE, BLACK, " Редактируемая ячейка (формат) ", RED, WHITE);
+  if (mt_gotoXY (17, 2) == -1)
+    return;
+  int x = memory[command_counter];
+  int sign = 0;
+  int command = 0;
+  int operand = 0;
+  sc_commandDecode (x, &sign, &command, &operand);
+
+  printf ("dec: %5d | oct: %5o | hex: %5x | bin: ", x, x, x);
+  int bits = sizeof (x) * 4;
+
+  for (int i = bits - 1; i >= 0; i--)
+    {
+      if ((x >> i) & 1)
+        {
+          printf ("1");
+        }
+      else
+        {
+          printf ("0");
+        }
+    }
+}
+
+void
 printTerm (int address, int input)
 {
   int rows;
   int cols;
   if (mt_getscreensize (&rows, &cols) == -1)
     return;
-  bc_box ((int)(rows * 2 / 3) - 1, (int)(cols * 2 / 4) - 1, 8, 11, WHITE,
+  bc_box (19, 63, 8, 11, WHITE,
           BLACK, "IN--OUT", GREEN, WHITE);
-  mt_gotoXY ((int)(rows * 2 / 3), (int)(cols * 2 / 4));
+  mt_gotoXY (19 + 1, 63 + 1);
   mt_delline ();
   mt_setdefaultcolor ();
   printf ("\n");
 
-  if (mt_gotoXY ((int)(rows * 2 / 3) + 4, (int)(cols * 2 / 4)) == -1)
+  if (mt_gotoXY (19 + 1 + 4, 63 + 1) == -1)
     return;
   if (input == OUT)
     {
       int x;
       sc_memoryGet (address, &x);
       if ((x >> 14) == 1)
-        printf ("+%4x    ", x);
+        printf ("    +%4x", x);
       else
-        printf ("-%4x    ", x);
+        printf ("    -%4x", x);
     }
   else
     {
@@ -266,8 +308,9 @@ main (int argc, char *argv[])
   if (mt_getscreensize (&row, &col) == -1)
     return -1;
   printf ("row = %d, col = %d", row, col);
+  // getchar ();
   printf ("проверка терминала\n");
-  if (row < 11 || col < 11)
+  if (row < 30 || col < 106)
     {
       printf ("терминал мал");
       return -1;
@@ -279,14 +322,13 @@ main (int argc, char *argv[])
 
   sc_memorySet (0, 32767);
   sc_memorySet (1, 32766);
-  bc_box (1, 1, 15, 62, WHITE, BLACK, "Оперативная память", RED, BLACK);
+  bc_box (1, 1, 15, 62, WHITE, BLACK, " Оперативная память ", RED, BLACK);
   printCell (0, BLACK, WHITE);
   printf ("\n");
   for (size_t i = 1; i < MEMORY_SIZE; i++)
     {
       printCell (i, WHITE, BLACK);
       printf ("\n");
-      // printf("\n");
     }
 
   int sign = 0;
@@ -313,6 +355,9 @@ main (int argc, char *argv[])
   sc_icounterSet (0);
 
   printBigCell ();
+  printf ("\n");
+
+  printEditableCell ();
   printf ("\n");
 
   sc_memorySet (6, 32766);
