@@ -1,14 +1,30 @@
-#include "../include/sc.h"
+#include <mySimpleComputer.h>
+#include <sc.h>
 
 int
-sc_regSet (int reg, int value)
+sc_regSet (int regist, int value)
 {
-  if (reg < FLAG_OVERFLOW || reg > FLAG_INVALID_COMMAND)
-    return -1;
-
-  if (value)
-    flag_register = flag_register | (1 << reg);
+  if (regist > 0 && regist < 6)
+    {
+      if (value == 1)
+        {
+          flagRegister = flagRegister | (1 << (regist - 1));
+          return 0;
+        }
+      else if (value == 0)
+        {
+          flagRegister = flagRegister & (~(1 << (regist - 1)));
+          return 0;
+        }
+      else
+        {
+          sc_regSet (WRONG_FLAG, 1);
+          return -1;
+        }
+    }
   else
-    flag_register = flag_register & ~(1 << reg);
-  return 0;
+    {
+      sc_regSet (WRONG_FLAG, 1);
+      return -1;
+    }
 }

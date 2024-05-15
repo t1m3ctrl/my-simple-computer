@@ -1,12 +1,18 @@
-#include "../include/sc.h"
+#include <mySimpleComputer.h>
+#include <sc.h>
 
 int
 sc_memoryGet (int address, int *value)
 {
-  if (address < 0 || address >= MEMORY_SIZE || !value)
+  int index = memory[address];
+  if (address < 0 || address >= 127)
     {
-      return -1;
+      sc_regSet (OUT_OF_MEMORY_BOUNDS, 1);
+      return 0;
     }
-  *value = memory[address];
+  else
+    {
+      *value = index;
+    }
   return 0;
 }

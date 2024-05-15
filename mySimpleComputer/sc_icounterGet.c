@@ -1,11 +1,14 @@
-#include "../include/sc.h"
+#include <mySimpleComputer.h>
+#include <sc.h>
 
 int
 sc_icounterGet (int *value)
 {
-  if (!value)
-    return -1;
+  if (value == NULL)
+    {
+      return -1;
+    }
 
-  *value = command_counter;
+  *value = count;
   return 0;
 }

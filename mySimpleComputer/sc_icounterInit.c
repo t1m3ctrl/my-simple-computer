@@ -1,8 +1,9 @@
-#include "../include/sc.h"
+#include <mySimpleComputer.h>
+#include <sc.h>
 
 int
-sc_icounterInit ()
+sc_icounterInit (void)
 {
-  command_counter = 0;
+  count = 0;
   return 0;
 }

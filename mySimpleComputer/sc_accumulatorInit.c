@@ -1,4 +1,5 @@
-#include "../include/sc.h"
+#include <mySimpleComputer.h>
+#include <sc.h>
 
 int
 sc_accumulatorInit (void)

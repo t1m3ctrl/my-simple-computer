@@ -1,15 +1,20 @@
-#include "../include/sc.h"
+#include <mySimpleComputer.h>
+#include <sc.h>
 
 int
-sc_commandDecode (int value, int *sign, int *command, int *operand)
+sc_commandDecode (int value, int *command, int *operand)
 {
-  if (value > 32768 - 1)
+  if ((value >> 14) != 0x0)
     {
       return -1;
     }
-
-  *sign = (value & SC_SIGN_MASK) >> SC_SIGN_BIT;
-  *command = (value >> (SC_OPERAND_BITS + 1)) & SC_COMMAND_MASK;
-  *operand = value & SC_OPERAND_MASK;
+  *command = value >> 7;
+  *operand = value & 0x7F;
+  if (!(sc_commandValidate (*command)))
+    {
+      *command = 0;
+      *operand = 0;
+      return -1;
+    }
   return 0;
 }

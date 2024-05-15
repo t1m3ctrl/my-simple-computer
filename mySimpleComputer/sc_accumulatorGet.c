@@ -1,10 +1,13 @@
-#include "../include/sc.h"
+#include <mySimpleComputer.h>
+#include <sc.h>
 
 int
 sc_accumulatorGet (int *value)
 {
-  if (!value)
-    return -1;
+  if (value == 0)
+    {
+      return -1;
+    }
 
   *value = accumulator;
   return 0;

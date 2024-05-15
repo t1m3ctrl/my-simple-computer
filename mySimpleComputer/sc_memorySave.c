@@ -1,18 +1,24 @@
-#include "../include/sc.h"
+#include <mySimpleComputer.h>
+#include <sc.h>
 
 int
 sc_memorySave (char *filename)
 {
-  if (!filename)
+  FILE *addressData = fopen (filename, "wb");
+  if (addressData == NULL)
     {
+      perror ("Error opening file");
       return -1;
     }
-  FILE *file = fopen (filename, "wb");
-  if (!file)
+
+  if (fwrite (memory, sizeof (int), sizeof (memory), addressData)
+      != sizeof (memory))
     {
+      fprintf (stderr, "Error writing to file\n");
+      fclose (addressData);
       return -1;
     }
-  fwrite (memory, sizeof (int), MEMORY_SIZE, file);
-  fclose (file);
+
+  fclose (addressData);
   return 0;
 }

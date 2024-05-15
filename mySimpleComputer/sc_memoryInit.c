@@ -1,11 +1,14 @@
-#include "../include/sc.h"
+#include <mySimpleComputer.h>
+#include <sc.h>
 
 int
 sc_memoryInit (void)
 {
-  for (int i = 0; i < MEMORY_SIZE; i++)
+  if (memory == NULL)
     {
-      memory[i] = 0;
+      memory = (int *)malloc (128 * sizeof (int));
     }
+  for (int i = 1; i <= 128; i++)
+    memory[i] = 0;
   return 0;
 }

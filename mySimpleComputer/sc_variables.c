@@ -1,6 +1,7 @@
-#include "../include/sc.h"
+#include <mySimpleComputer.h>
+#include <sc.h>
 
-int memory[MEMORY_SIZE];
+int *memory;
 int accumulator;
-int command_counter;
-int flag_register;
+int count;
+int flagRegister;

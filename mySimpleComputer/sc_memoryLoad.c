@@ -1,18 +1,24 @@
-#include "../include/sc.h"
+#include <mySimpleComputer.h>
+#include <sc.h>
 
 int
 sc_memoryLoad (char *filename)
 {
-  if (!filename)
+  FILE *addressData = fopen (filename, "rb");
+  if (addressData == NULL)
     {
+      perror ("Error opening file");
       return -1;
     }
-  FILE *file = fopen (filename, "rb");
-  if (!file)
+
+  if (fread (memory, sizeof (int), sizeof (memory), addressData)
+      != sizeof (memory))
     {
+      fprintf (stderr, "Error reading from file\n");
+      fclose (addressData);
       return -1;
     }
-  fread (memory, sizeof (int), MEMORY_SIZE, file);
-  fclose (file);
+
+  fclose (addressData);
   return 0;
 }
