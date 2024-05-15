@@ -1,4 +1,4 @@
 #pragma once
 #include <myReadKey.h>
 
-extern struct termios options;
+extern struct termios termTemp;

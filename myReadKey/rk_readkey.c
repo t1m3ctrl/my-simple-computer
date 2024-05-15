@@ -9,7 +9,7 @@ rk_readKey (enum keys *key)
   read (0, buffer, 5);
   rk_myTermRestore ();
 
-  if (buffer[0] == '\E')
+  if (buffer[0] == '\033')
     {
       if (buffer[1] == '[')
         {

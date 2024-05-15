@@ -2,17 +2,9 @@
 #include <rk_structs.h>
 
 int
-rk_myTermSave (void)
+rk_myTermSave ()
 {
-  FILE *file;
-
-  if (tcgetattr (STDIN_FILENO, &options) != 0)
+  if (tcgetattr (0, &termTemp))
     return -1;
-  if ((file = fopen ("termsettings", "wb")) == NULL)
-    return -1;
-
-  fwrite (&options, sizeof (options), 1, file);
-  fclose (file);
-
   return 0;
 }

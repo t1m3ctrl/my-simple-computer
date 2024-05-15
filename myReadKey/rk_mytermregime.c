@@ -5,7 +5,6 @@ int
 rk_myTermRegime (int regime, int vtime, int vmin, int echo, int sigint)
 {
   struct termios term;
-
   tcgetattr (0, &term);
 
   if (regime)
@@ -20,6 +19,5 @@ rk_myTermRegime (int regime, int vtime, int vmin, int echo, int sigint)
     }
 
   tcsetattr (0, TCSAFLUSH, &term);
-
   return 0;
 }
