@@ -8,7 +8,7 @@ sc_memoryInit (void)
     {
       memory = (int *)malloc (128 * sizeof (int));
     }
-  for (int i = 1; i <= 128; i++)
+  for (int i = 0; i < 128; i++)
     memory[i] = 0;
   return 0;
 }

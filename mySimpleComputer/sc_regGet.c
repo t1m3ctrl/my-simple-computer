@@ -11,7 +11,7 @@ sc_regGet (int regist, int *value)
     }
   else
     {
-      sc_regSet (WRONG_FLAG, 1);
+      sc_regSet (INCORRECT_COMMAND_RECEIVED, 4);
       return -1;
     }
 }

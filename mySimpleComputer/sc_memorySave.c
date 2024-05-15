@@ -11,8 +11,7 @@ sc_memorySave (char *filename)
       return -1;
     }
 
-  if (fwrite (memory, sizeof (int), sizeof (memory), addressData)
-      != sizeof (memory))
+  if (fwrite (memory, sizeof (int), 128, addressData) != 128)
     {
       fprintf (stderr, "Error writing to file\n");
       fclose (addressData);
@@ -20,5 +19,6 @@ sc_memorySave (char *filename)
     }
 
   fclose (addressData);
+
   return 0;
 }

@@ -6,20 +6,21 @@ void
 printCommand ()
 {
   mt_setfgcolor (WHITE);
-  int address, value;
+  int address, command, operand;
   mt_gotoXY (93, 5);
   sc_icounterGet (&address);
+  // >> 8
+  sc_commandDecode (memory[address], &command, &operand);
   if (address >= 0 && address < 128)
     {
-      if (!sc_commandValidate (memory[address]))
+      if (!sc_commandValidate (command))
         {
           printf ("! ");
           printf ("+FF: FF");
         }
       else
         {
-          sc_memoryGet (address, &value);
-          printf ("%02d: %d", address, memory[address]);
+          printf ("%03d: %d", address, command);
         }
     }
   else

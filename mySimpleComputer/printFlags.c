@@ -1,3 +1,4 @@
+#include <console.h>
 #include <mySimpleComputer.h>
 #include <myTerm.h>
 #include <sc.h>
@@ -17,7 +18,7 @@ printFlags ()
     {
       printf ("_ ");
     }
-  sc_regGet (WRONG_FLAG, &value);
+  sc_regGet (OVERFLOW_OPERATION, &value);
   if (value)
     {
       printf ("M ");

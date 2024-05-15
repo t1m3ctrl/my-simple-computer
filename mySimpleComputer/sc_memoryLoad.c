@@ -11,8 +11,7 @@ sc_memoryLoad (char *filename)
       return -1;
     }
 
-  if (fread (memory, sizeof (int), sizeof (memory), addressData)
-      != sizeof (memory))
+  if (fread (memory, sizeof (int), 128, addressData) != 128)
     {
       fprintf (stderr, "Error reading from file\n");
       fclose (addressData);

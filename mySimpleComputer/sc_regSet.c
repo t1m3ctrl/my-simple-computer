@@ -18,13 +18,13 @@ sc_regSet (int regist, int value)
         }
       else
         {
-          sc_regSet (WRONG_FLAG, 1);
+          sc_regSet (OVERFLOW_OPERATION, 1);
           return -1;
         }
     }
   else
     {
-      sc_regSet (WRONG_FLAG, 1);
+      sc_regSet (OVERFLOW_OPERATION, 1);
       return -1;
     }
 }
