@@ -1,43 +1,28 @@
-#include "../include/bc.h"
+#include <myBigChars.h>
+#include <myTerm.h>
 
 int
-bc_printbigchar (int *big, int x, int y, enum colors fg, enum colors bg)
+bc_printbigchar (int *big, int x, int y, enum colors colorFg,
+                 enum colors colorBg)
 {
-  int fd = STDOUT_FILENO;
+  if (colorFg != DEFAULT)
+    mt_setfgcolor (colorFg);
+  if (colorBg != DEFAULT)
+    mt_setbgcolor (colorBg);
 
-  char cmd1[] = "\033(0";
-  char cmd2[] = "\033(B";
+  for (int i = 0; i < 8; ++i)
+    for (int j = 0; j < 8; ++j)
+      {
+        mt_gotoXY (x + i, y + j);
+        int value;
+        if (bc_getbigcharpos (big, i, j, &value))
+          return -1;
+        if (value)
+          bc_printA (ACS_CKBOARD);
+        else
+          printf ("%c", ' ');
+      }
 
-  int result = write (fd, cmd1, sizeof (cmd1) - 1);
-  printf ("\n");
-
-  mt_setbgcolor (bg);
-  mt_setfgcolor (fg);
-  printf ("\n");
-
-  for (size_t i = 0; i < 8; i++)
-    {
-      mt_gotoXY (x + i, y);
-      for (int k = 7; k > -1; k--)
-        {
-          int value = 0;
-          bc_getbigcharpos (big, i, k, &value);
-          if (value)
-            printf ("a");
-          else
-            printf (" ");
-        }
-      printf ("\n");
-    }
-
-  result = write (fd, cmd2, sizeof (cmd2) - 1);
-  printf ("\n");
-
-  mt_setdefaultcolor ();
-  printf ("\n");
-
-  if (result != -1)
-    return 0;
-  else
-    return -1;
+  mt_setdefaultcolors ();
+  return 0;
 }

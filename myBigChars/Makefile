@@ -1,26 +1,33 @@
-CC=gcc
-CFLAGS= -Wall -Werror -Wextra
-LDFLAGS=
-OBJ_DIR=.
-SOURCES=$(shell find ./* -name '*.c')
+CC = gcc
+CFLAGS = -Wall -Werror -Wextra -std=c11 
+SRCDIR = .
+OBJ_DIR = ./obj
+LIBDIR = .
 
-OBJECTS=$(SOURCES:./%.c=$(OBJ_DIR)/%.o)
-EXECUTABLE=$(OBJ_DIR)/libBC.a
+SRCS := $(wildcard $(SRCDIR)/*.c)
+OBJS := $(patsubst $(SRCDIR)/%,$(OBJ_DIR)/%,$(SRCS:.c=.o))
 
-all: $(EXECUTABLE)
-
-$(EXECUTABLE): $(OBJECTS)
-	ar rcs $@ $^
-	ranlib $(EXECUTABLE)
-# $(MAKE) -C ./ clean
-
-$(OBJ_DIR)/%.o: %.c
-	$(CC) -c $(CFLAGS) $< -o $@
-
-clean:
-	find $(OBJ_DIR) -name '*.o' -exec $(RM) '{}' \;
-	find $(OBJ_DIR) -name '*.d' -exec $(RM) '{}' \;
-	find $(OBJ_DIR) -name '*.a' -exec $(RM) '{}' \;
-# $(RM) $(EXECUTABLE)
+LIB_FILE = $(LIBDIR)/libMyBigChars.a
 
 .PHONY: all clean
+
+all: $(LIB_FILE)
+
+$(LIB_FILE): $(OBJS)
+	ar rcs $@ $^
+
+$(OBJ_DIR)/%.o: $(SRCDIR)/%.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -I. -I../include -I../myTerm -c -o $@ $<
+
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
+
+run: all $(SRCDIR) $(SRCDIR)console.out
+
+$(SRCDIR)console.out: $(OBJ_DIR)/main.o $(LIB_FILE)
+	$(CC) $(CFLAGS) -o $@ $^
+$(OBJ_DIR)main.o: main.c 
+	$(CC) -c $(CFLAGS) -o $@ $^
+
+clean:
+	rm -rf $(OBJ_DIR) $(LIB_FILE) *.bin *.o
