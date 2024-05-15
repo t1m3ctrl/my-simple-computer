@@ -1,15 +1,12 @@
-#include "../include/mt.h"
+#include <myTerm.h>
 
 int
 mt_getscreensize (int *rows, int *cols)
 {
   struct winsize ws;
-  if (!ioctl (STDOUT_FILENO, TIOCGWINSZ, &ws))
-    {
-      *rows = ws.ws_row;
-      *cols = ws.ws_col;
-      return 0;
-    }
-  else
+  if (ioctl (1, TIOCGWINSZ, &ws))
     return -1;
+  *rows = ws.ws_row;
+  *cols = ws.ws_col;
+  return 0;
 }

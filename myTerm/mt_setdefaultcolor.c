@@ -1,10 +1,9 @@
-#include "../include/mt.h"
+#include <myTerm.h>
 
 int
 mt_setdefaultcolor (void)
 {
-  char seq[] = "\033[0m";
-  if (write (STDOUT_FILENO, seq, sizeof (seq) - 1) == -1)
-    return -1;
+  printf ("\E[97m\E[40m");
+
   return 0;
 }

@@ -1,11 +1,14 @@
-#include "../include/mt.h"
+#include <myTerm.h>
 
 int
-mt_gotoXY (int x, int y)
+mt_gotoXY (int col, int row)
 {
-  char seq[16];
-  int len = snprintf (seq, sizeof (seq), "\033[%d;%dH", x, y);
-  if (write (STDOUT_FILENO, seq, len) == -1)
+  int rows, cols;
+  if (mt_getscreensize (&rows, &cols) == -1)
     return -1;
+  if ((row > rows) || (row <= 0) || (col > cols) || (col <= 0))
+    return -1;
+
+  printf ("\E[%d;%dH", row, col);
   return 0;
 }

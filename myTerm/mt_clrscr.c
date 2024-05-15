@@ -1,10 +1,8 @@
-#include "../include/mt.h"
+#include <myTerm.h>
 
 int
 mt_clrscr (void)
 {
-  char seq[] = "\033[H\033[J";
-  if (write (STDOUT_FILENO, seq, sizeof (seq) - 1) == -1)
-    return -1;
+  printf ("\E[H\E[2J");
   return 0;
 }
