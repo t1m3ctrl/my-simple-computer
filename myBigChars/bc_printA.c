@@ -4,6 +4,6 @@
 int
 bc_printA (char str)
 {
-  printf ("\E(0%c\E(B", str);
+  printf ("\033(0%c\033(B", str);
   return 0;
 }
