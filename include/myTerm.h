@@ -12,6 +12,25 @@
 #include <sys/ioctl.h>
 #include <time.h>
 
+enum colors
+{
+  RED = 196,
+  PEACH = 203,
+  GREEN = 10,
+  SOFT_GREEN = 192,
+  BLUE = 20,
+  BLACK = 16,
+  GRAY = 240,
+  WHITE = 15,
+  DEFAULT = 0
+};
+
+typedef struct memBuffer
+{
+  int addr;
+  int buf;
+} memBuffer1;
+
 #define BASE_MEMORY_ADDRESS 10
 #define MEMORY_BLOCK_WIDTH 10
 #define CELL_WIDTH 6
@@ -36,26 +55,6 @@
 #define IN_OUT_ROW 8
 #define IN_OUT_COL 70
 
-enum colors
-{
-  RED = 196,
-  PEACH = 203,
-  GREEN = 10,
-  SOFT_GREEN = 192,
-  INPUT = 39,
-  BLUE = 20,
-  BLACK = 16,
-  GRAY = 240,
-  WHITE = 15,
-  DEFAULT = 0
-};
-
-typedef struct memBuffer
-{
-  int addr;
-  int buf;
-} memBuffer1;
-
 int mt_clrscr (void);
 int mt_gotoXY (int col, int row);
 int mt_getscreensize (int *rows, int *cols);
@@ -64,5 +63,5 @@ int mt_setbgcolor (enum colors color);
 int mt_setdefaultcolors (void);
 int mt_setcursorvisible (int value);
 int mt_delline (void);
-void printTerm (int address, int input, memBuffer1 *);
+void printTerm (int address, int input, memBuffer1 buffer[]);
 void printCommand (void);
