@@ -1,4 +1,4 @@
 #pragma once
-#include <rk.h>
+#include <myReadKey.h>
 
-extern struct termios termTemp;
+extern struct termios options;

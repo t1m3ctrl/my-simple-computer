@@ -1,13 +1,13 @@
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -std=c11 -I../include
+CFLAGS = -Wall -Werror -Wextra -std=c11 
 SRCDIR = .
-OBJ_DIR = ../console/obj
-LIBDIR = ../console/obj
+OBJ_DIR = ./obj
+LIBDIR = .
 
 SRCS := $(wildcard $(SRCDIR)/*.c)
 OBJS := $(patsubst $(SRCDIR)/%,$(OBJ_DIR)/%,$(SRCS:.c=.o))
 
-LIB_FILE = $(LIBDIR)/libRK.a
+LIB_FILE = $(LIBDIR)/libMyReadKey.a
 
 .PHONY: all clean
 
@@ -21,6 +21,13 @@ $(OBJ_DIR)/%.o: $(SRCDIR)/%.c | $(OBJ_DIR)
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
+
+run: all $(SRCDIR) $(SRCDIR)console.out
+
+$(SRCDIR)console.out: $(OBJ_DIR)/main.o $(LIB_FILE)
+	$(CC) $(CFLAGS) -o $@ $^
+$(OBJ_DIR)main.o: main.c 
+	$(CC) -c $(CFLAGS) -o $@ $^
 
 clean:
 	rm -rf $(OBJ_DIR) $(LIB_FILE) *.bin *.o
