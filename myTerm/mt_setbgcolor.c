@@ -3,6 +3,6 @@
 int
 mt_setbgcolor (enum colors color)
 {
-  printf ("\E[48;5;%dm", color);
+  printf ("\033[48;5;%dm", color);
   return 0;
 }

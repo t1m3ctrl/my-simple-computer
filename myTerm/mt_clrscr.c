@@ -3,6 +3,6 @@
 int
 mt_clrscr (void)
 {
-  printf ("\E[H\E[2J");
+  printf ("\033[H\033[2J");
   return 0;
 }

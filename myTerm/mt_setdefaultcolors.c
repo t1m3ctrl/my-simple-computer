@@ -3,6 +3,6 @@
 int
 mt_setdefaultcolors (void)
 {
-  printf ("\E[0m");
+  printf ("\033[0m");
   return 0;
 }

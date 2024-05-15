@@ -3,6 +3,6 @@
 int
 mt_delline (void)
 {
-  printf ("\E[K");
+  printf ("\033[K");
   return 0;
 }

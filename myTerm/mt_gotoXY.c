@@ -9,6 +9,6 @@ mt_gotoXY (int col, int row)
   if ((row > rows) || (row <= 0) || (col > cols) || (col <= 0))
     return -1;
 
-  printf ("\E[%d;%dH", row, col);
+  printf ("\033[%d;%dH", row, col);
   return 0;
 }

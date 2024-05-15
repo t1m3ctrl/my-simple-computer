@@ -5,11 +5,11 @@ mt_setcursorvisible (int value)
 {
   if (value)
     {
-      printf ("\E[?25h");
+      printf ("\033[?25h");
     }
   else
     {
-      printf ("\E[?25l");
+      printf ("\033[?25l");
     }
   return 0;
 }
