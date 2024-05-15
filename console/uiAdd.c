@@ -8,8 +8,8 @@
 int
 uiAdd (void)
 {
-  mt_setbgcolor(DEFAULT);
-  
+  mt_setbgcolor (DEFAULT);
+
   mt_clrscr ();
   boxesUI ();
   textsUI ();

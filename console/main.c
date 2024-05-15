@@ -66,11 +66,11 @@ main (void)
                   filename[strlen (filename) - 1] = '\0';
                   if (sc_memoryLoad (filename))
                     {
-                      messageUI ((char *) "Failed to load memory", RED);
+                      messageUI ((char *)"Failed to load memory", RED);
                       break;
                     }
                   else
-                    messageUI ((char *) "Successful load", GREEN);
+                    messageUI ((char *)"Successful load", GREEN);
                   break;
                 case SAVE:
                   printf ("Input file name for save > ");
@@ -78,11 +78,11 @@ main (void)
                   // filename[strlen (filename) - 1] = '\0';
                   if (sc_memorySave (filename))
                     {
-                      messageUI ((char *) "Failed to save memory", RED);
+                      messageUI ((char *)"Failed to save memory", RED);
                       break;
                     }
                   else
-                    messageUI ((char *) "Successful save", GREEN);
+                    messageUI ((char *)"Successful save", GREEN);
                   break;
                 case RESET:
                   raise (SIGUSR1);
@@ -169,11 +169,11 @@ main (void)
                   // filename[strlen (filename) - 1] = '\0';
                   if (sc_memorySave (filename))
                     {
-                      messageUI ((char *) "Failed to save memory", RED);
+                      messageUI ((char *)"Failed to save memory", RED);
                       break;
                     }
                   else
-                    messageUI ((char *) "Successful save", GREEN);
+                    messageUI ((char *)"Successful save", GREEN);
 
                   break;
                 case LOAD:
@@ -182,11 +182,11 @@ main (void)
                   // filename[strlen (filename) - 1] = '\0';
                   if (sc_memoryLoad (filename))
                     {
-                      messageUI ((char *) "Failed to load memory", RED);
+                      messageUI ((char *)"Failed to load memory", RED);
                       break;
                     }
                   else
-                    messageUI ((char *) "Successful load", GREEN);
+                    messageUI ((char *)"Successful load", GREEN);
                   break;
                 case RUN:
                   sc_regInit ();
