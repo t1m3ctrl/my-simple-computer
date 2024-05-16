@@ -15,7 +15,7 @@ printTerm (int address, int input, memBuffer1 buffer[])
       for (int i = 0; i < 5; i++)
         {
 
-          mt_gotoXY (72, 21 + i);
+          mt_gotoXY (72, 20 + i);
           printf ("%d ", buffer[i].addr);
           printf ("< ");
           if ((buffer[i].buf >> 14) & 1)
@@ -35,7 +35,7 @@ printTerm (int address, int input, memBuffer1 buffer[])
     {
       for (int i = 0; i < 5; i++)
         {
-          mt_gotoXY (72, 21 + i);
+          mt_gotoXY (72, 20 + i);
           printf ("%d ", buffer[i].addr);
           printf ("> ");
           if ((buffer[i].buf >> 14) & 1)

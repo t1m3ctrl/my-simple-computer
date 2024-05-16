@@ -20,7 +20,7 @@ printCommand ()
         }
       else
         {
-          printf ("%03d: %d", address, command);
+          printf ("+ %02X : %02X", address, command);
         }
     }
   else

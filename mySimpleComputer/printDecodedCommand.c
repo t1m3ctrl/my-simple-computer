@@ -5,7 +5,7 @@
 void
 printDecodedCommand (int value)
 {
-  mt_gotoXY (2, 18);
+  mt_gotoXY (2, 17);
   mt_setfgcolor (WHITE);
   // value &= 0x3FFF;
   if ((value >> 14) & 1)

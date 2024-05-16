@@ -17,6 +17,7 @@
 #define JZ 0x2A
 #define HALT 0x2B
 
+#define XOR 0x36
 #define JNS 0x37
 #define JP 0x3A
 #define SUBC 0x42

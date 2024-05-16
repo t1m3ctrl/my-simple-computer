@@ -18,15 +18,15 @@ boxesUI (void)
     return -1;
   if (bc_box (89, 1, 27, 3)) // flags
     return -1;
-  if (bc_box (62, 7, 54, 13)) // bigChars
+  if (bc_box (62, 7, 54, 12)) // bigChars
     return -1;
-  if (bc_box (84, 20, 32, 7)) // keys
+  if (bc_box (84, 19, 32, 7)) // keys
     return -1;
-  if (bc_box (1, 16, 61, 4)) //  bigChar mini
+  if (bc_box (1, 16, 61, 3)) //  bigChar mini
     return -1;
-  if (bc_box (1, 20, 69, 7)) //  cashe
+  if (bc_box (1, 19, 69, 7)) //  cache
     return -1;
-  if (bc_box (70, 20, 14, 7)) //  In-Out
+  if (bc_box (70, 19, 14, 7)) //  In-Out
     return -1;
 
   return 0;

@@ -10,7 +10,7 @@ cacheUI ()
 {
   for (int i = 0; i < CACHE_SIZE; ++i)
     {
-      mt_gotoXY (2, 21 + i);
+      mt_gotoXY (2, 20 + i);
 
       if (cache[i].address == -1)
         {

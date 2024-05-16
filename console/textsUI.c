@@ -27,33 +27,33 @@ textsUI (void)
 
   mt_setfgcolor (GREEN);
   mt_setbgcolor (WHITE);
-  mt_gotoXY (23, 20);
+  mt_gotoXY (23, 19);
   printf (" Кеш процессора ");
 
-  mt_gotoXY (72, 20);
+  mt_gotoXY (72, 19);
   printf (" IN--OUT ");
 
-  mt_gotoXY (95, 20);
+  mt_gotoXY (95, 19);
 
   printf (" Клавиши ");
   mt_setfgcolor (WHITE);
   mt_setbgcolor (DEFAULT);
 
-  mt_gotoXY (85, 21);
+  mt_gotoXY (85, 20);
   printf ("l - Load");
-  mt_gotoXY (95, 21);
+  mt_gotoXY (95, 20);
   printf ("s - Save");
-  mt_gotoXY (105, 21);
+  mt_gotoXY (105, 20);
   printf ("i - Reset");
-  mt_gotoXY (85, 22);
+  mt_gotoXY (85, 21);
   printf ("r  - Run");
-  mt_gotoXY (95, 22);
+  mt_gotoXY (95, 21);
   printf ("t  - Step");
-  mt_gotoXY (85, 23);
+  mt_gotoXY (85, 22);
   printf ("ESC - Выход");
-  mt_gotoXY (85, 24);
+  mt_gotoXY (85, 23);
   printf ("F5 - Аккумулятор");
-  mt_gotoXY (85, 25);
+  mt_gotoXY (85, 24);
   printf ("F6 - Счетчик команд");
   mt_setfgcolor (DEFAULT);
   return 0;

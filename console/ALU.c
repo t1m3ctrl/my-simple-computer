@@ -48,6 +48,15 @@ ALU (int command, int operand)
         }
       count++;
       break;
+    case 0x36:
+      accumulator ^= value;
+      if (accumulator > 32767 || accumulator < -32767)
+        {
+          sc_regSet (OVERFLOW_OPERATION, 1);
+          return -1;
+        }
+      count++;
+      break;
     default:
       return -1;
     }

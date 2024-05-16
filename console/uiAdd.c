@@ -29,7 +29,7 @@ uiAdd (void)
       uiCommand1 ();
     }
   cacheUI ();
-  mt_gotoXY (1, 27);
+  mt_gotoXY (1, 26);
   printf ("Input:\n");
   return 0;
 }

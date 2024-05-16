@@ -8,7 +8,7 @@
 int
 cellUI (void)
 {
-  mt_gotoXY (63, 18);
+  mt_gotoXY (63, 17);
   mt_setfgcolor (BLUE);
   mt_setbgcolor (DEFAULT);
   printf (" Номер редактируемой ячейки: %03d ", cell);
