@@ -25,7 +25,7 @@ make
 # Go to the console directory
 cd console
 # Run app and enjoy
-./test
+./console.out
 # You can also cleanup all project build results from root directory
 cd my-simple-computer
 make clean
